@@ -1,6 +1,6 @@
 /* 
    BrielOS - Final Brand DNA
-   Colors: Deep Slate (#3F4A4F), Warm Off-White (#F9F7F2), Fog (#C9D1CF)
+   Aesthetic: Silent, Expensive, Archival
 */
 
 :root {
@@ -42,7 +42,7 @@ body {
   padding: 0 2rem;
 }
 
-/* 2. NAVIGATION & LOGO */
+/* 2. NAVIGATION & WORDMARK */
 nav {
   display: flex;
   justify-content: space-between;
@@ -51,23 +51,15 @@ nav {
 }
 
 .logo-group {
-  display: flex;
-  align-items: center;
   text-decoration: none;
-}
-
-.nav-icon {
-  height: 64px; /* Scaled for presence */
-  width: auto;
-  margin-right: 16px;
-  display: block;
 }
 
 .logo-text {
   font-family: 'Playfair Display', serif; 
-  font-size: 1.8rem;
+  font-size: 2rem; /* Slightly larger for the wordmark */
+  font-weight: 500;
   color: var(--deep-slate);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .nav-links a {
@@ -77,6 +69,11 @@ nav {
   font-size: 0.85rem;
   text-transform: lowercase;
   letter-spacing: 0.05em;
+  transition: opacity 0.3s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
 }
 
 /* 3. TYPOGRAPHY */
@@ -115,10 +112,10 @@ p {
   font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.05em;
-  transition: opacity 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background: var(--intelligence-blue);
 }
 
