@@ -1,143 +1,262 @@
-/* BrielOS - Final Brand DNA
-   Colors: Deep Slate (#3F4A4F), Warm Off-White (#F9F7F2), Fog (#CC9D1CF)
-*/
+/* =================================================
+   BRIELOS — VISUAL STANDARDS v1.1 (LOCKED)
+   Desktop + Mobile
+   ================================================= */
+
+
+/* ================================
+   FONT DECLARATIONS (SELF-HOSTED)
+   ================================ */
+
+@font-face {
+  font-family: "Canela";
+  src: url("/fonts/Canela-Regular.woff2") format("woff2"),
+       url("/fonts/Canela-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Canela";
+  src: url("/fonts/Canela-Medium.woff2") format("woff2"),
+       url("/fonts/Canela-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Regular.woff2") format("woff2"),
+       url("/fonts/Inter-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Medium.woff2") format("woff2"),
+       url("/fonts/Inter-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ================================
+   ROOT VARIABLES
+   ================================ */
 
 :root {
-  --warm-off-white: #F9F7F2; 
-  --deep-slate: #3F4A4F;      
-  --intelligence-blue: #4A5D6C; 
-  --fog: #CC9D1CF;            
-  --warm-stone: #B09A81;      
-  
-  --space-lg: 8rem;
-  --space-md: 4rem;
-  --space-sm: 2rem;
+  --font-serif: "Canela", serif;
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --color-bg: #F6F3EF;
+  --color-text: #2F2F2F;
+  --color-muted: #6B6F72;
+  --color-accent: #3F4A4F;
+
+  --space-xs: 0.75rem;
+  --space-sm: 1.25rem;
+  --space-md: 2.5rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
 }
 
-/* Global Reset */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ================================
+   GLOBAL RESET
+   ================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
-  background-color: var(--warm-off-white);
-  color: var(--deep-slate);
-  font-family: 'Inter', sans-serif; 
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
+
+/* ================================
+   TYPOGRAPHY HIERARCHY
+   ================================ */
+
+h1,
+h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--space-sm) 0;
 }
 
-/* Navigation */
-nav {
+h3,
+h4,
+h5 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  margin: 0 0 var(--space-xs) 0;
+}
+
+p {
+  margin: 0 0 var(--space-sm) 0;
+  max-width: 48rem;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+/* ================================
+   HEADER / NAV
+   ================================ */
+
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-md) 0;
+  padding: var(--space-md) 5%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.logo-group {
+.logo-container {
   display: flex;
   align-items: center;
-  text-decoration: none;
+  gap: 15px;
 }
 
-.nav-icon {
-  height: 42px;
+.logo-container img {
+  height: 40px;
   width: auto;
-  margin-right: 12px;
 }
 
-.logo-text {
-  font-family: serif; /* Editorial Authority */
-  font-size: 1.6rem;
-  color: var(--deep-slate);
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--intelligence-blue);
-  margin-left: 2.5rem;
-  font-size: 0.85rem;
-  text-transform: lowercase;
-}
-
-/* Typography */
-h1, h2 {
-  font-family: serif; 
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
-
-h1 { font-size: 4rem; line-height: 1.1; margin-bottom: var(--space-sm); }
-h2 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1.5rem; }
-
-.tagline, .sub-headline {
-  font-size: 1.4rem;
-  max-width: 650px;
-  color: var(--intelligence-blue);
-}
-
-.eyebrow {
-  display: block;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 0.8rem;
-  color: var(--warm-stone);
-  margin-bottom: 1.5rem;
-}
-
-/* Layout Components */
-.page-header {
-  padding: var(--space-md) 0;
-  border-bottom: 1px solid var(--fog);
-  margin-bottom: var(--space-md);
-}
-
-.btn-primary {
-  display: inline-block;
-  margin-top: 2rem;
-  padding: 1.2rem 2.4rem;
-  background: var(--deep-slate);
-  color: white;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-/* Forms */
-.intake-form {
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-
-.form-group input, .form-group textarea {
-  padding: 1rem;
-  background-color: transparent;
-  border: 1px solid var(--fog);
-  color: var(--deep-slate);
-  font-family: inherit;
-  font-size: 1rem;
-}
-
-/* Method Lists */
-.results-list { list-style: none; margin-top: 2rem; }
-.results-list li {
+.logo-container span {
+  font-family: var(--font-serif);
   font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  padding-left: 1.5rem;
-  position: relative;
+  font-weight: 500;
 }
-.results-list li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: var(--warm-stone);
+
+nav a {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  margin-left: 2rem;
+  opacity: 0.85;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+
+/* ================================
+   HERO
+   ================================ */
+
+.hero {
+  max-width: 1200px;
+  margin: var(--space-xl) auto var(--space-lg) auto;
+  padding: 0 5%;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 4.5vw, 3rem);
+  line-height: 1.12;
+  max-width: 22ch;
+  margin-bottom: var(--space-sm);
+}
+
+.hero p {
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  max-width: 36rem;
+}
+
+
+/* ================================
+   SECTIONS
+   ================================ */
+
+section {
+  max-width: 1200px;
+  margin: 0 auto var(--space-lg) auto;
+  padding: 0 5%;
+}
+
+section:last-of-type {
+  margin-bottom: var(--space-xl);
+}
+
+
+/* ================================
+   BUTTONS
+   ================================ */
+
+button,
+.button {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background-color: var(--color-accent);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button:hover,
+.button:hover {
+  opacity: 0.9;
+}
+
+
+/* =================================================
+   MOBILE BREAKPOINT (TIGHTENED)
+   ================================================= */
+
+@media (max-width: 768px) {
+
+  header {
+    padding: var(--space-sm) 6%;
+  }
+
+  nav a {
+    margin-left: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    margin: var(--space-lg) auto var(--space-md) auto;
+    padding: 0 6%;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 7vw, 2.4rem);
+    line-height: 1.15;
+    max-width: 26ch;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  section {
+    margin-bottom: var(--space-md);
+    padding: 0 6%;
+  }
 }
