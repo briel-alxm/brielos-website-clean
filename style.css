@@ -50,6 +50,18 @@ nav {
   padding: var(--space-md) 0;
 }
 
+.logo-group {
+  text-decoration: none;
+}
+
+.logo-text {
+  font-family: 'Playfair Display', serif; 
+  font-size: 2rem; /* Slightly larger for the wordmark */
+  font-weight: 500;
+  color: var(--deep-slate);
+  letter-spacing: -0.02em;
+}
+
 .nav-links a {
   text-decoration: none;
   color: var(--intelligence-blue);
