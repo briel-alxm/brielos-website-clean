@@ -1,0 +1,143 @@
+/* BrielOS - Final Brand DNA
+   Colors: Deep Slate (#3F4A4F), Warm Off-White (#F9F7F2), Fog (#CC9D1CF)
+*/
+
+:root {
+  --warm-off-white: #F9F7F2; 
+  --deep-slate: #3F4A4F;      
+  --intelligence-blue: #4A5D6C; 
+  --fog: #CC9D1CF;            
+  --warm-stone: #B09A81;      
+  
+  --space-lg: 8rem;
+  --space-md: 4rem;
+  --space-sm: 2rem;
+}
+
+/* Global Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--warm-off-white);
+  color: var(--deep-slate);
+  font-family: 'Inter', sans-serif; 
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) 0;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.nav-icon {
+  height: 42px;
+  width: auto;
+  margin-right: 12px;
+}
+
+.logo-text {
+  font-family: serif; /* Editorial Authority */
+  font-size: 1.6rem;
+  color: var(--deep-slate);
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--intelligence-blue);
+  margin-left: 2.5rem;
+  font-size: 0.85rem;
+  text-transform: lowercase;
+}
+
+/* Typography */
+h1, h2 {
+  font-family: serif; 
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: 4rem; line-height: 1.1; margin-bottom: var(--space-sm); }
+h2 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1.5rem; }
+
+.tagline, .sub-headline {
+  font-size: 1.4rem;
+  max-width: 650px;
+  color: var(--intelligence-blue);
+}
+
+.eyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  color: var(--warm-stone);
+  margin-bottom: 1.5rem;
+}
+
+/* Layout Components */
+.page-header {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--fog);
+  margin-bottom: var(--space-md);
+}
+
+.btn-primary {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1.2rem 2.4rem;
+  background: var(--deep-slate);
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Forms */
+.intake-form {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.form-group input, .form-group textarea {
+  padding: 1rem;
+  background-color: transparent;
+  border: 1px solid var(--fog);
+  color: var(--deep-slate);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* Method Lists */
+.results-list { list-style: none; margin-top: 2rem; }
+.results-list li {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.results-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--warm-stone);
+}
