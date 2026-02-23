@@ -1,92 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrielOS — Decision Architecture</title>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrielOS — Decision Architecture</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Loading Inter for body text and Playfair as a high-end Canela alternative -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 </head>
-
 <body>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo-group">
+                <!-- Ensure your folder is named 'assets' or change this path -->
+                <img src="assets/logo.png" alt="BrielOS logo" class="nav-icon">
+                <span class="logo-text">BrielOS</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">home</a>
+                <a href="foundations.html">foundations</a>
+                <a href="contact.html">contact</a>
+            </div>
+        </nav>
 
-  <!-- ===============================
-       HEADER
-       =============================== -->
-  <header>
-    <div class="logo-container">
-      <img src="assets/BrielOS_logo.png" alt="BrielOS logo" />
-      <span>BrielOS</span>
+        <header class="page-header">
+            <span class="eyebrow">Decision Architecture</span>
+            <h1>Architecture before effort.</h1>
+            <p>
+                Most performance failures are not motivational. They are architectural. 
+                BrielOS designs decision structures where clarity produces disproportionate results.
+            </p>
+            <a href="foundations.html" class="btn-primary">View the foundations →</a>
+        </header>
+
+        <section class="content-section">
+            <h2>Where this matters now</h2>
+            <p>
+                AI systems increasingly act on behalf of organizations — shaping language, 
+                tone, prioritization, and implication.
+            </p>
+            <p>
+                Without decision architecture, this introduces drift, reputational risk, and 
+                strategic incoherence.
+            </p>
+        </section>
     </div>
-
-    <nav>
-      <a href="index.html">home</a>
-      <a href="foundations.html">foundations</a>
-      <a href="#contact">contact</a>
-    </nav>
-  </header>
-
-
-  <!-- ===============================
-       MAIN
-       =============================== -->
-  <main>
-
-    <!-- HERO -->
-    <section class="hero">
-      <h1>Architecture before effort.</h1>
-
-      <p>
-        Most performance failures are not motivational.
-        They are architectural.
-        BrielOS designs decision structures where clarity
-        produces disproportionate results.
-      </p>
-
-      <a href="foundations.html" class="button">
-        View the foundations →
-      </a>
-    </section>
-
-
-    <!-- CONTEXT / AI APPLICATION -->
-    <section class="context">
-      <h3>Where this matters now</h3>
-
-      <p>
-        AI systems increasingly act on behalf of organizations —
-        shaping language, tone, prioritization, and implication.
-      </p>
-
-      <p>
-        Without decision architecture, this introduces drift,
-        reputational risk, and outcomes no one explicitly chose.
-      </p>
-
-      <p>
-        One application of BrielOS is <strong>AI Narrative Integrity</strong>,
-        ensuring AI systems operate only within decisions leaders
-        are willing to stand behind.
-      </p>
-
-      <p class="synthesis">
-        <em>
-          BrielOS governs decision architecture;
-          AI Narrative Integrity governs how those decisions
-          are expressed through AI.
-        </em>
-      </p>
-    </section>
-
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Inquiries by introduction only.</p>
-    </section>
-
-  </main>
-
 </body>
 </html>
