@@ -4,39 +4,426 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrielOS — Decision Architecture</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F0E8;
+      --ink: #1C1C1A;
+      --ink-light: #4A4A45;
+      --ink-faint: #9A9A92;
+      --accent: #8B6E52;
+      --accent-light: #C4A882;
+      --rule: #D8D0C4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
+    }
+    nav.scrolled { border-bottom-color: var(--rule); }
+    .nav-logo {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 48px; list-style: none; }
+    .nav-links a {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: lowercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+
+    /* HERO — Recognition */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 60px 100px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 44px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+
+    .hero-headline {
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      max-width: 820px;
+      margin-bottom: 52px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 1s ease forwards 0.55s;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--ink-light);
+      max-width: 500px;
+      line-height: 1.9;
+      margin-bottom: 64px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.9s ease forwards 0.8s;
+    }
+
+    .hero-cta {
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.05s;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 18px 40px;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-primary:hover { background: var(--accent); }
+
+    /* DIVIDER */
+    .divider {
+      width: 1px;
+      height: 80px;
+      background: var(--accent-light);
+      margin: 0 60px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.3s;
+    }
+
+    /* SECTION — Intrigue */
+    .intrigue {
+      padding: 100px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .intrigue.visible { opacity: 1; transform: translateY(0); }
+
+    .intrigue-label {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    .intrigue h2 {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300;
+      line-height: 1.18;
+      letter-spacing: -0.015em;
+      margin-bottom: 32px;
+    }
+    .intrigue h2 em { font-style: italic; color: var(--accent); }
+
+    .intrigue-right p {
+      font-size: 18px;
+      color: var(--ink-light);
+      line-height: 1.95;
+      margin-bottom: 24px;
+    }
+
+    .intrigue-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-light);
+      padding-bottom: 4px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .intrigue-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* PULL QUOTE — Trust */
+    .trust-quote {
+      margin: 40px 60px 100px;
+      padding: 72px 80px;
+      border: 1px solid var(--rule);
+      background: rgba(139, 110, 82, 0.03);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .trust-quote.visible { opacity: 1; transform: translateY(0); }
+
+    .trust-quote blockquote {
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      max-width: 700px;
+    }
+
+    .trust-quote cite {
+      display: block;
+      margin-top: 32px;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    /* THREE PILLARS */
+    .pillars {
+      padding: 60px 60px 120px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .pillars.visible { opacity: 1; transform: translateY(0); }
+
+    .pillars-label {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 56px;
+      display: block;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .pillar {
+      background: var(--cream);
+      padding: 48px 40px;
+    }
+
+    .pillar-number {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--accent-light);
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .pillar h3 {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+    .pillar h3 em { font-style: italic; color: var(--accent); }
+
+    .pillar p {
+      font-size: 16px;
+      color: var(--ink-light);
+      line-height: 1.85;
+    }
+
+    /* FINAL CTA */
+    .final-cta {
+      padding: 100px 60px 140px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .final-cta.visible { opacity: 1; transform: translateY(0); }
+
+    .final-cta p {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink-light);
+      margin-bottom: 48px;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 2px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 24px 28px; }
+      .nav-links { gap: 24px; }
+      .hero, .intrigue, .trust-quote, .pillars, .final-cta { padding-left: 28px; padding-right: 28px; }
+      .divider { margin-left: 28px; }
+      .trust-quote { padding: 48px 32px; margin: 40px 28px 80px; }
+      .intrigue { grid-template-columns: 1fr; gap: 40px; }
+      .pillars-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="brand">BrielOS</div>
-  <nav class="nav">
-    <a href="/">home</a>
-    <a href="/foundations.html">foundations</a>
-    <a href="/method.html">the method</a>
-    <a href="/contact.html">contact</a>
+  <nav id="nav">
+    <a href="/" class="nav-logo">BrielOS</a>
+    <ul class="nav-links">
+      <li><a href="/" class="active">home</a></li>
+      <li><a href="/foundations.html">foundations</a></li>
+      <li><a href="/method.html">the method</a></li>
+      <li><a href="/contact.html">contact</a></li>
+    </ul>
   </nav>
-</header>
 
-<main class="container">
+  <!-- RECOGNITION -->
   <section class="hero">
-    <div class="eyebrow">DECISION ARCHITECTURE</div>
-
-    <h1>Architecture before effort.</h1>
-
-    <p class="lead">
-      Most performance failures aren’t motivational. They’re architectural.
+    <span class="hero-eyebrow">Decision Architecture</span>
+    <h1 class="hero-headline">
+      Architecture<br />
+      before <em>effort.</em>
+    </h1>
+    <p class="hero-sub">
+      Most performance failures aren't motivational.<br />
+      They're architectural.
     </p>
-
-    <p class="supporting">
-      We design leverage where clarity compounds.
-    </p>
-
-    <a class="cta" href="/foundations.html">
-      Explore the foundations →
-    </a>
+    <div class="hero-cta">
+      <a href="/foundations.html" class="btn-primary">Explore the Foundations</a>
+    </div>
   </section>
-</main>
 
+  <div class="divider"></div>
+
+  <!-- INTRIGUE -->
+  <section class="intrigue" id="intrigue">
+    <div class="intrigue-left">
+      <span class="intrigue-label">What this is</span>
+      <h2>We design leverage<br />where <em>clarity compounds.</em></h2>
+    </div>
+    <div class="intrigue-right">
+      <p>
+        BrielOS is not coaching. Not motivation. Not another productivity system borrowed from someone else's reality.
+      </p>
+      <p>
+        It is structural diagnosis. Decision architecture. A system built from your actual signal — designed for your specific substrate.
+      </p>
+      <p>
+        When structure fits signal, clarity isn't something you chase. It arrives.
+      </p>
+      <a href="/method.html" class="intrigue-link">See the Method →</a>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust-quote" id="trust">
+    <blockquote>
+      "Most people never get to ask whether the structure itself is the problem. They keep applying more effort to a system that was never built for their signal."
+    </blockquote>
+    <cite>BrielOS — The Foundations</cite>
+  </div>
+
+  <!-- PILLARS -->
+  <section class="pillars" id="pillars">
+    <span class="pillars-label">What BrielOS protects</span>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <span class="pillar-number">01</span>
+        <h3><em>Clarity</em></h3>
+        <p>Signal protected from distortion, noise, and narrative drift.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-number">02</span>
+        <h3><em>Coherence</em></h3>
+        <p>Alignment between values, roles, energy, time, and structure.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-number">03</span>
+        <h3><em>Authorship</em></h3>
+        <p>The right to write your own operating system — and have it remain yours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta" id="finalcta">
+    <p>If something in this feels like recognition —<br />that's where we begin.</p>
+    <a href="/contact.html" class="btn-primary">Begin Here</a>
+  </section>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    const revealEls = document.querySelectorAll('.intrigue, .trust-quote, .pillars, .final-cta');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>

@@ -3,42 +3,491 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foundations — BrielOS</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>BrielOS — The Foundations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F0E8;
+      --warm-white: #FAFAF7;
+      --ink: #1C1C1A;
+      --ink-light: #4A4A45;
+      --ink-faint: #9A9A92;
+      --accent: #8B6E52;
+      --accent-light: #C4A882;
+      --rule: #D8D0C4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
+    }
+
+    nav.scrolled { border-bottom-color: var(--rule); }
+
+    .nav-logo {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: lowercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--ink); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 60px 80px;
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-headline {
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 300;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-subtext {
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--ink-light);
+      max-width: 560px;
+      line-height: 1.9;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.9s ease forwards 0.65s;
+    }
+
+    /* RULE */
+    .section-rule {
+      width: 48px;
+      height: 1px;
+      background: var(--accent-light);
+      margin: 80px 60px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1s;
+    }
+
+    /* BODY SECTIONS */
+    .section {
+      padding: 80px 60px;
+      max-width: 820px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-label {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    .section h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+    }
+
+    .section h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section p {
+      font-size: 19px;
+      font-weight: 300;
+      color: var(--ink-light);
+      line-height: 1.95;
+      margin-bottom: 24px;
+      max-width: 640px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      margin: 80px 60px;
+      padding: 56px 60px;
+      border-left: 1px solid var(--accent-light);
+      background: rgba(139, 110, 82, 0.04);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .pull-quote.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pull-quote blockquote {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .pull-quote cite {
+      display: block;
+      margin-top: 24px;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    /* THREE TRUTHS */
+    .truths {
+      padding: 80px 60px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .truths.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .truths-label {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 56px;
+      display: block;
+    }
+
+    .truth-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .truth-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .truth-number {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--accent-light);
+      padding-top: 6px;
+    }
+
+    .truth-content h3 {
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .truth-content h3 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .truth-content p {
+      font-size: 17px;
+      color: var(--ink-light);
+      line-height: 1.9;
+      max-width: 560px;
+    }
+
+    /* CLOSING */
+    .closing {
+      padding: 100px 60px 120px;
+      max-width: 720px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .closing.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .closing p {
+      font-size: 21px;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--ink-light);
+      margin-bottom: 24px;
+    }
+
+    .closing p strong {
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .cta-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-light);
+      padding-bottom: 4px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .cta-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 2px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 24px 28px; }
+      .nav-links { gap: 28px; }
+      .hero, .section, .pull-quote, .truths, .closing, .section-rule { padding-left: 28px; padding-right: 28px; }
+      .section-rule { margin-left: 28px; margin-right: 28px; }
+      .pull-quote { padding: 40px 32px; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="brand">BrielOS</div>
-  <nav class="nav">
-    <a href="/">home</a>
-    <a href="/foundations.html">foundations</a>
-    <a href="/method.html">the method</a>
-    <a href="/contact.html">contact</a>
+  <nav id="nav">
+    <a href="/" class="nav-logo">BrielOS</a>
+    <ul class="nav-links">
+      <li><a href="/">home</a></li>
+      <li><a href="/foundations.html" class="active">foundations</a></li>
+      <li><a href="/method.html">the method</a></li>
+      <li><a href="/contact.html">contact</a></li>
+    </ul>
   </nav>
-</header>
 
-<main class="container">
-  <section class="foundations">
-    <div class="eyebrow">THE FOUNDATIONS</div>
-
-    <h2>Why architecture matters now</h2>
-
-    <p class="body">
-      AI systems increasingly act on behalf of organizations — shaping language,
-      tone, prioritization, and downstream implication.
+  <section class="hero">
+    <span class="eyebrow">The Foundations</span>
+    <h1 class="hero-headline">
+      Most systems fail<br />
+      not from lack of effort —<br />
+      but from <em>misaligned architecture.</em>
+    </h1>
+    <p class="hero-subtext">
+      What you're about to read isn't new information.<br />
+      It's something you already know — finally named.
     </p>
-
-    <p class="body">
-      Without decision architecture, this results in drift, reputational risk,
-      and strategic incoherence — often invisibly, at scale.
-    </p>
-
-    <a class="cta" href="/method.html">
-      The Method →
-    </a>
   </section>
-</main>
+
+  <div class="section-rule"></div>
+
+  <div class="section" id="s1">
+    <span class="section-label">The problem</span>
+    <h2>You've been working hard.<br /><em>Inside the wrong structure.</em></h2>
+    <p>
+      Performance failures feel personal. They're supposed to — every system around you was designed to make you believe the gap is you. Not enough discipline. Not enough clarity. Not enough.
+    </p>
+    <p>
+      But what if the structure itself is the problem? What if the friction you feel every day isn't resistance to be overcome — but information about misalignment?
+    </p>
+    <p>
+      Most people never get to ask that question. They keep applying more effort to a system that was never built for their signal.
+    </p>
+  </div>
+
+  <div class="pull-quote" id="pq1">
+    <blockquote>
+      "Effort fails not from insufficiency — but from misalignment."
+    </blockquote>
+    <cite>BrielOS Axiom</cite>
+  </div>
+
+  <div class="section" id="s2">
+    <span class="section-label">The insight</span>
+    <h2>Your signal is real.<br /><em>The container was wrong.</em></h2>
+    <p>
+      Every person operates from a core signal — a state of clarity, coherence, and directional energy that is entirely their own. When actions align with that signal, things move. Decisions feel clear. Work has weight.
+    </p>
+    <p>
+      When structure pulls you away from that signal — through misaligned defaults, borrowed frameworks, inherited systems — the energy leaks. Not because you lost it. Because the container couldn't hold it.
+    </p>
+    <p>
+      This isn't philosophy. It's architecture. And architecture can be redesigned.
+    </p>
+  </div>
+
+  <div class="truths" id="truths">
+    <span class="truths-label">Three things that are always true</span>
+
+    <div class="truth-item">
+      <span class="truth-number">01</span>
+      <div class="truth-content">
+        <h3>Structure determines outcome<br /><em>before effort begins.</em></h3>
+        <p>The system you operate inside shapes every decision, every output, every moment of clarity or confusion — before you've done a single thing. Changing behavior inside a broken structure produces diminishing returns.</p>
+      </div>
+    </div>
+
+    <div class="truth-item">
+      <span class="truth-number">02</span>
+      <div class="truth-content">
+        <h3>Value without attribution<br /><em>diffuses without trace.</em></h3>
+        <p>When what you create moves through systems that don't bind it back to you — your insight, your work, your signal — it survives without its source. This isn't just an intellectual property problem. It's an existential one. And most people feel it without having language for it.</p>
+      </div>
+    </div>
+
+    <div class="truth-item">
+      <span class="truth-number">03</span>
+      <div class="truth-content">
+        <h3>Clarity is not a feeling.<br /><em>It is a structural condition.</em></h3>
+        <p>You don't find clarity by trying harder to think clearly. You find it by removing the architecture that produces noise. When the structure fits the signal, clarity arrives — not as inspiration, but as a natural consequence of coherence.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pull-quote" id="pq2">
+    <blockquote>
+      "A system only achieves true coherence when authorship remains traceable across every level."
+    </blockquote>
+    <cite>BrielOS — The Axiom</cite>
+  </div>
+
+  <div class="closing" id="closing">
+    <p>
+      BrielOS exists because these things are true — and because <strong>most systems are built as if they aren't.</strong>
+    </p>
+    <p>
+      We don't motivate. We don't coach. We don't extract.<br />
+      We diagnose the architecture. We redesign the structure. We hand you back your signal — bound to its origin, built to hold.
+    </p>
+    <p>
+      If something in what you just read felt like recognition —<br />
+      <strong>that's where we begin.</strong>
+    </p>
+    <a href="/method.html" class="cta-link">The Method →</a>
+  </div>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Intersection observer for scroll reveals
+    const revealEls = document.querySelectorAll('.section, .pull-quote, .truths, .closing');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
